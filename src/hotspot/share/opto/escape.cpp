@@ -169,7 +169,7 @@ bool ConnectionGraph::compute_escape() {
                (n->Opcode() == Op_CmpP || n->Opcode() == Op_CmpN)) {
       // Collect compare pointers nodes.
       ptr_cmp_worklist.append(n);
-    } else if (n->is_MemBarStoreStore()) {
+    } else if (n->is_MemBarStoreStore() && n->req() > MemBarNode::Precedent) {
       // Collect all MemBarStoreStore nodes so that depending on the
       // escape status of the associated Allocate node some of them
       // may be eliminated.
